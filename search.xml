@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+    
+    <entry>
+      <title><![CDATA[正则表达式]]></title>
+      <url>/2018/01/26/hello-world/</url>
+      <content type="html"><![CDATA[<p>——ES6中允许RegExp构造函数接受正则表达式作为参数，如果使用RegExp构造函数的第二个参数指定修饰符，则返回的正则表达式会忽略原有的正则表达式的修饰符，只使用第二个参数指定的修饰符。<br><a id="more"></a><br>——字符串的正则方法<br>字符串对象共有4个方法，可以使用正则表达式：match()、replace()、search()和split()。<br>ES6 将这4个方法，在语言内部全部调用RegExp的实例方法，从而做到所有与正则相关的方法，全都定义在RegExp对象上。<br>String.prototype.match 调用 RegExp.prototype[Symbol.match]<br>String.prototype.replace 调用 RegExp.prototype[Symbol.replace]<br>String.prototype.search 调用 RegExp.prototype[Symbol.search]<br>String.prototype.split 调用 RegExp.prototype[Symbol.split]</p>
+<p>——u修饰符<br>于码点大于0xFFFF的 Unicode 字符，点字符不能识别，必须加上u修饰符。<br>var s = ‘𠮷’;<br>/^.$/.test(s) // false<br>/^.$/u.test(s) // true</p>
+<p>Unicode 字符表示法<br>ES6 新增了使用大括号表示 Unicode 字符，这种表示法在正则表达式中必须加上u修饰符，才能识别当中的大括号，否则会被解读为量词。<br>/\u{61}/.test(‘a’) // false<br>/\u{61}/u.test(‘a’) // true<br>/\u{20BB7}/u.test(‘𠮷’) // true<br>上面代码表示，如果不加u修饰符，正则表达式无法识别\u{61}这种表示法，只会认为这匹配61个连续的u。</p>
+<p>使用u修饰符后，所有量词都会正确识别码点大于0xFFFF的 Unicode 字符。</p>
+<p>i 修饰符<br>有些 Unicode 字符的编码不同，但是字型很相近，比如，\u004B与\u212A都是大写的K。<br>/[a-z]/i.test(‘\u212A’) // false<br>/[a-z]/iu.test(‘\u212A’) // true<br>上面代码中，不加u修饰符，就无法识别非规范的K字符。</p>
+<p>——y修饰符<br>y修饰符的作用与g修饰符类似，也是全局匹配，后一次匹配都从上一次匹配成功的下一个位置开始。不同之处在于，g修饰符只要剩余位置中存在匹配就可，而y修饰符确保匹配必须从剩余的第一个位置开始，这也就是“粘连”的涵义</p>
+<p>const REGEX = /a/g;    // 指定从2号位置（y）开始匹配</p>
+<p>REGEX.lastIndex = 2;    // 匹配成功</p>
+<p>const match = REGEX.exec(‘xaya’);    // 在3号位置匹配成功</p>
+<p>match.index // 3    // 下一次匹配从4号位开始</p>
+<p>REGEX.lastIndex // 4    // 4号位开始匹配失败</p>
+<p>REGEX.exec(‘xaxa’) // null</p>
+<p>——sticky属性<br>与y修饰符相匹配，ES6 的正则对象多了sticky属性，表示是否设置了y修饰符。<br>var r = /hello\d/y;<br>r.sticky // true</p>
+<p>  ——flags属性<br>ES6 为正则表达式新增了flags属性，会返回正则表达式的修饰符。</p>
+<p>// ES5 的 source 属性<br>// 返回正则表达式的正文<br>/abc/ig.source            // “abc”</p>
+<p>// ES6 的 flags 属性<br>// 返回正则表达式的修饰符<br>/abc/ig.flags            // ‘gi’</p>
+<p>——RegExp.escape()<br>？？？</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 编程 </category>
+            
+        </categories>
+        
+        
+    </entry>
+    
+  
+  
+</search>
